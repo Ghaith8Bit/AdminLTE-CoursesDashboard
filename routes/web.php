@@ -36,9 +36,15 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
     });
     Route::prefix('announcements')->name('announcements.')->group(function () {
         Route::get('/', [AnnouncementController::class, 'index'])->name('index');
-        Route::get('/{id}', [AnnouncementController::class, 'index'])->name('show');
+        Route::get('/{id}', [AnnouncementController::class, 'show'])->name('show');
     });
     Route::prefix('courses')->name('courses.')->group(function () {
         Route::get('/', [CourseController::class, 'index'])->name('index');
+        Route::get('/{course}', [CourseController::class, 'show'])->name('show');
+        Route::middleware('admin')->group(function () {
+            Route::post('/', [CourseController::class, 'store'])->name('store');
+            Route::put('/{course}', [CourseController::class, 'update'])->name('update');
+            Route::delete('/{course}', [CourseController::class, 'destroy'])->name('destroy');
+        });
     });
 });

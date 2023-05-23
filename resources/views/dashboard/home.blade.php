@@ -111,7 +111,7 @@
                     <div class="col-12 col-sm-6 col-md-3 d-flex justify-content-center align-items-center mb-4 mb-md-0">
                         <a href="#">
                             <span
-                                class="info-box-icon rounded-circle p-3 bg-primary elevation-1 d-flex justify-content-center align-items-center"
+                                class="info-box-icon info-box-icon-hover rounded-circle p-3 bg-primary elevation-1 d-flex justify-content-center align-items-center"
                                 style="width: 100px; height: 100px;">
                                 <i class="fas fa-comment fa-3x"></i>
                             </span>
@@ -120,7 +120,7 @@
                     <div class="col-12 col-sm-6 col-md-3 d-flex justify-content-center align-items-center mb-4 mb-md-0">
                         <a href="{{ route('dashboard.profile.index') }}">
                             <span
-                                class="info-box-icon rounded-circle p-3 bg-secondary elevation-1 d-flex justify-content-center align-items-center"
+                                class="info-box-icon info-box-icon-hover rounded-circle p-3 bg-secondary elevation-1 d-flex justify-content-center align-items-center"
                                 style="width: 100px; height: 100px;">
                                 <i class="fas fa-user fa-3x"></i>
                             </span>
@@ -130,7 +130,7 @@
                     <div class="col-12 col-sm-6 col-md-3 d-flex justify-content-center align-items-center mb-4 mb-md-0">
                         <a href="{{ route('dashboard.courses.index') }}">
                             <span
-                                class="info-box-icon rounded-circle p-3 bg-success elevation-1 d-flex justify-content-center align-items-center"
+                                class="info-box-icon info-box-icon-hover rounded-circle p-3 bg-success elevation-1 d-flex justify-content-center align-items-center"
                                 style="width: 100px; height: 100px;">
                                 <i class="fas fa-book fa-3x"></i>
                             </span>
@@ -139,7 +139,7 @@
                     <div class="col-12 col-sm-6 col-md-3 d-flex justify-content-center align-items-center">
                         <a href="{{ route('dashboard.announcements.index') }}">
                             <span
-                                class="info-box-icon rounded-circle p-3 bg-danger elevation-1 d-flex justify-content-center align-items-center"
+                                class="info-box-icon info-box-icon-hover rounded-circle p-3 bg-danger elevation-1 d-flex justify-content-center align-items-center"
                                 style="width: 100px; height: 100px;">
                                 <i class="fas fa-bullhorn fa-3x"></i>
                             </span>

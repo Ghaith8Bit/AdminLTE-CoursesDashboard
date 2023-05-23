@@ -10,7 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <style>
-    .info-box-icon:hover {
+    .info-box-icon-hover:hover {
         cursor: pointer;
         transform: scale(1.1);
         transition: all 0.2s ease-in-out;
