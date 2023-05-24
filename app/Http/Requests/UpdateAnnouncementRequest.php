@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-class CreateCourseRequest extends FormRequest
+class UpdateAnnouncementRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,8 @@ class CreateCourseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string'],
-            'price' => ['required', 'numeric', 'min:0'],
-            'start_date' => ['required', 'date'],
-            'end_date' => ['required', 'date', 'after:start_date']
+            'title' => ['required', 'max:255'],
+            'body' => ['required'],
         ];
     }
 
@@ -44,7 +41,6 @@ class CreateCourseRequest extends FormRequest
     {
         throw new ValidationException($validator, redirect()
             ->route('dashboard.announcements.index')
-            ->withInput()
             ->with('error', 'Please enter valid input.'));
     }
 }

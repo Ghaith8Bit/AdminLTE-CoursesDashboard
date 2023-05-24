@@ -10,7 +10,6 @@ class CourseFilters extends Filter
 
     protected $availableParams = [
         'name' => ['like'],
-        'description' => ['like'],
         'price' => ['eq', 'neq', 'gt', 'gte', 'lt', 'lte'],
         'start_date' => ['eq', 'neq', 'gt', 'gte', 'lt', 'lte'],
         'end_date' => ['eq', 'neq', 'gt', 'gte', 'lt', 'lte'],

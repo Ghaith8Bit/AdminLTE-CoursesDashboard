@@ -17,7 +17,7 @@
                                 <p><strong>End Date:</strong> {{ $course->end_date }}</p>
                             </div>
                             <div class="col-md-6">
-                                <p><strong>Instructor:</strong> John Doe</p>
+                                <p><strong>Date:</strong>{{ $course->created_at->format('M d, Y') }}</p>
                             </div>
                         </div>
                     </div>

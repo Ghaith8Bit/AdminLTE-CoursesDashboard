@@ -46,7 +46,7 @@ class CourseController extends Controller
     public function update(UpdateCourseRequest $request, Course $course)
     {
         $course->update($request->all());
-        return redirect()->route('dashboard.courses.index')->with('success', 'Course updated successfully.');
+        return redirect()->back()->with('success', 'Course updated successfully.');
     }
 
     /**
@@ -55,7 +55,6 @@ class CourseController extends Controller
     public function destroy(Course $course)
     {
         $course->delete();
-
-        return redirect()->route('dashboard.courses.index')->with('success', 'Course deleted successfully.');
+        return redirect()->back()->with('success', 'Course deleted successfully.');
     }
 }

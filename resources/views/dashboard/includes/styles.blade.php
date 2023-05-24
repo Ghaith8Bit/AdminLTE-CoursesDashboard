@@ -10,6 +10,41 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <style>
+    .form-check-label {
+        border-radius: 50px;
+        background-color: #ddd;
+        transition: background-color 0.2s;
+        width: 60px;
+        height: 30px;
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+    }
+
+    .form-check-input:checked+.form-check-label {
+        background-color: #007bff;
+    }
+
+    .form-check-input {
+        display: none;
+    }
+
+    .form-check-label:after {
+        content: "";
+        background-color: white;
+        border-radius: 50%;
+        width: 26px;
+        height: 26px;
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        transition: transform 0.2s;
+    }
+
+    .form-check-input:checked+.form-check-label:after {
+        transform: translateX(30px);
+    }
+
     .info-box-icon-hover:hover {
         cursor: pointer;
         transform: scale(1.1);

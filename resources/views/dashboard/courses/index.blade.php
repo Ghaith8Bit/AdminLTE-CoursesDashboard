@@ -34,9 +34,7 @@
                             <th>Price</th>
                             <th>Start Date</th>
                             <th>End Date</th>
-                            @if (auth()->user()->isAdmin())
-                                <th>Control</th>
-                            @endif
+                            <th>Control</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,17 +45,17 @@
                                 <td>{{ $course->price }}</td>
                                 <td>{{ $course->start_date }}</td>
                                 <td>{{ $course->end_date }}</td>
-                                @if (auth()->user()->isAdmin())
-                                    <td>
-                                        <div class="dropdown">
-                                            <button class="btn btn-secondary dropdown-toggle" type="button"
-                                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false">
-                                                Actions
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item"
-                                                    href="{{ route('dashboard.courses.show', $course->id) }}">Show</a>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button"
+                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            Actions
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item"
+                                                href="{{ route('dashboard.courses.show', $course->id) }}">Show</a>
+                                            @if (auth()->user()->isAdmin())
                                                 <a href="#" class="dropdown-item" data-toggle="modal"
                                                     data-target="#editModal{{ $course->id }}">
                                                     Edit
@@ -70,19 +68,14 @@
                                                         href="{{ route('dashboard.courses.destroy', $course->id) }}"
                                                         onclick="event.preventDefault(); this.closest('form').submit();">Delete</a>
                                                 </form>
-                                            </div>
+                                            @endif
                                         </div>
-                                    </td>
-                                @endif
+                                    </div>
+                                </td>
                             </tr>
                         @empty
                             <tr>
-                                @if (auth()->user()->isAdmin())
-                                    <td colspan="6">No courses found.</td>
-                                @endif
-                                @if (auth()->user()->isUser())
-                                    <td colspan="5">No courses found.</td>
-                                @endif
+                                <td colspan="6">No courses found.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -152,8 +145,7 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <button type="submit" class="btn btn-primary">Apply Filters</button>
-                                                <button type="reset" class="btn btn-secondary">Reset
-                                                    Filters</button>
+                                                <button type="reset" class="btn btn-secondary">Reset Filters</button>
                                             </div>
                                         </div>
                                     </form>
