@@ -80,7 +80,7 @@
                         @endforelse
                     </tbody>
                 </table>
-                {{ $courses->links('pagination::bootstrap-5', ['paginator' => $courses]) }}
+                {{ $courses->appends(request()->query())->links('pagination::bootstrap-5', ['paginator' => $courses]) }}
 
                 {{-- Filters Modal --}}
                 <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel"

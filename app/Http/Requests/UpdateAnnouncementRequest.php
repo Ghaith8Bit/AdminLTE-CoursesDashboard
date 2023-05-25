@@ -40,7 +40,7 @@ class UpdateAnnouncementRequest extends FormRequest
     protected function failedValidation(Validator $validator)
     {
         throw new ValidationException($validator, redirect()
-            ->route('dashboard.announcements.index')
+            ->back()
             ->with('error', 'Please enter valid input.'));
     }
 }

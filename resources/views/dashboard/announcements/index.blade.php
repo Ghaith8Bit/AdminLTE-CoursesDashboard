@@ -73,7 +73,7 @@
                                             <a class="dropdown-item"
                                                 href="{{ route('dashboard.announcements.show', $announcement->id) }}">Show</a>
                                             @if (auth()->user()->isAdmin())
-                                                <a href="{{ route('dashboard.announcements.show', $announcement->id) }}"
+                                                <a href="{{ route('dashboard.announcements.update', $announcement->id) }}"
                                                     class="dropdown-item" data-toggle="modal"
                                                     data-target="#editModal{{ $announcement->id }}">
                                                     Edit </a>
@@ -103,7 +103,7 @@
                         @endforelse
                     </tbody>
                 </table>
-                {{ $announcements->links('pagination::bootstrap-5', ['paginator' => $announcements]) }}
+                {{ $announcements->appends(request()->query())->links('pagination::bootstrap-5', ['paginator' => $announcements]) }}
 
                 {{-- Filters Modal --}}
                 <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel"
@@ -126,8 +126,6 @@
                                             <div class="form-group col-md-6">
                                                 <label for="dateFilter">Date</label>
                                                 <select class="form-control" id="dateFilter" name="date_operator">
-                                                    <option value="eq">Equal to</option>
-                                                    <option value="neq">Not equal to</option>
                                                     <option value="gt">After</option>
                                                     <option value="gte">On or after</option>
                                                     <option value="lt">Before</option>

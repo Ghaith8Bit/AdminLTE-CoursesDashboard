@@ -24,3 +24,4 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="{{ asset('dist/js/course.filter.min.js') }}"></script>
 <script src="{{ asset('dist/js/announcement.filter.min.js') }}"></script>
+<script src="{{ asset('dist/js/user.filter.min.js') }}"></script>

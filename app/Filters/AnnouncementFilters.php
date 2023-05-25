@@ -11,6 +11,6 @@ class AnnouncementFilters extends Filter
     protected $availableParams = [
         'title' => ['like'],
         'is_published' => ['eq'],
-        'created_at' => ['eq', 'neq', 'gt', 'gte', 'lt', 'lte'],
+        'created_at' => ['gt', 'gte', 'lt', 'lte'],
     ];
 }

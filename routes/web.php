@@ -32,7 +32,14 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
         Route::patch('/update-password', [ProfileController::class, 'updatePassword'])->name('updatePassword');
     });
     Route::prefix('users')->name('users.')->group(function () {
-        Route::get('/', [UserController::class, 'index'])->name('index');
+        Route::middleware('admin')->group(function () {
+            Route::get('/', [UserController::class, 'index'])->name('index');
+            Route::get('/{user}', [UserController::class, 'show'])->name('show');
+            Route::post('/', [UserController::class, 'store'])->name('store');
+            Route::put('/{user}', [UserController::class, 'update'])->name('update');
+            Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
+            Route::patch('/{user}/role', [UserController::class, 'role'])->name('role');
+        });
     });
     Route::prefix('announcements')->name('announcements.')->group(function () {
         Route::get('/', [AnnouncementController::class, 'index'])->name('index');

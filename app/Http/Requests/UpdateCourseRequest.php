@@ -43,7 +43,7 @@ class UpdateCourseRequest extends FormRequest
     protected function failedValidation(Validator $validator)
     {
         throw new ValidationException($validator, redirect()
-            ->route('dashboard.courses.index')
+            ->back()
             ->with('error', 'Please enter valid input.'));
     }
 }
