@@ -30,7 +30,7 @@
                     class="nav-link {{ request()->is('dashboard/announcements') ? 'text-primary' : '' }}">Announcements</a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link {{ request()->is('#') ? 'text-primary' : '' }}">Chat</a>
+                <a href="{{ route('dashboard.chats.index') }}" class="nav-link {{ request()->is('dashboard/chats') ? 'text-primary' : '' }}">Chat</a>
             </li>
         </ul>
 

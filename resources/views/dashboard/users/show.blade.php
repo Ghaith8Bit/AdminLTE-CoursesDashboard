@@ -14,7 +14,7 @@
                         <p class="card-text"><strong>Created:</strong> {{ $user->created_at->format('M d, Y') }}</p>
                     </div>
                     <div class="card-footer">
-                        <a href="{{ route('dashboard.users.index') }}" class="btn btn-secondary">Back</a>
+                        <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
                     </div>
                 </div>
             </div>

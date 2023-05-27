@@ -53,7 +53,7 @@
                                                 onchange="event.preventDefault(); document.getElementById('publishForm{{ $announcement->id }}').submit();">
                                             <label class="form-check-label"
                                                 for="publishSwitch{{ $announcement->id }}"></label>
-                                            <form action="{{ route('dashboard.announcements.publish', $announcement->id) }}"
+                                            <form action="{{ route('dashboard.announcements.publish', $announcement) }}"
                                                 method="POST" id="publishForm{{ $announcement->id }}"
                                                 style="display:none;">
                                                 @csrf
@@ -71,19 +71,19 @@
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             <a class="dropdown-item"
-                                                href="{{ route('dashboard.announcements.show', $announcement->id) }}">Show</a>
+                                                href="{{ route('dashboard.announcements.show', $announcement) }}">Show</a>
                                             @if (auth()->user()->isAdmin())
-                                                <a href="{{ route('dashboard.announcements.update', $announcement->id) }}"
+                                                <a href="{{ route('dashboard.announcements.update', $announcement) }}"
                                                     class="dropdown-item" data-toggle="modal"
                                                     data-target="#editModal{{ $announcement->id }}">
                                                     Edit </a>
                                                 <form
-                                                    action="{{ route('dashboard.announcements.destroy', $announcement->id) }}"
+                                                    action="{{ route('dashboard.announcements.destroy', $announcement) }}"
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <a class="dropdown-item"
-                                                        href="{{ route('dashboard.announcements.destroy', $announcement->id) }}"
+                                                        href="{{ route('dashboard.announcements.destroy', $announcement) }}"
                                                         onclick="event.preventDefault(); this.closest('form').submit();">Delete</a>
                                                 </form>
                                             @endif
@@ -104,135 +104,133 @@
                     </tbody>
                 </table>
                 {{ $announcements->appends(request()->query())->links('pagination::bootstrap-5', ['paginator' => $announcements]) }}
+            </div>
+        </div>
+    </div>
 
-                {{-- Filters Modal --}}
-                <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <!-- Filter card content goes here -->
-                            <div class="card mt-4">
-                                <div class="card-header">
-                                    <h5 class="card-title">Filters and Search</h5>
+    {{-- Filters Modal --}}
+    <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <!-- Filter card content goes here -->
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h5 class="card-title">Filters and Search</h5>
+                    </div>
+                    <div class="card-body px-4 py-3">
+                        <form id="announcementsFilterForm">
+                            <div class="form-row mb-3">
+                                <div class="form-group col-md-6">
+                                    <label for="titleFilter">Title</label>
+                                    <input type="text" class="form-control" id="titleFilter" name="title"
+                                        placeholder="Enter title">
                                 </div>
-                                <div class="card-body px-4 py-3">
-                                    <form id="announcementsFilterForm">
-                                        <div class="form-row mb-3">
-                                            <div class="form-group col-md-6">
-                                                <label for="titleFilter">Title</label>
-                                                <input type="text" class="form-control" id="titleFilter" name="title"
-                                                    placeholder="Enter title">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="dateFilter">Date</label>
-                                                <select class="form-control" id="dateFilter" name="date_operator">
-                                                    <option value="gt">After</option>
-                                                    <option value="gte">On or after</option>
-                                                    <option value="lt">Before</option>
-                                                    <option value="lte">On or before</option>
-                                                </select>
-                                                <input type="date" class="form-control mt-2" id="dateFilterValue"
-                                                    name="date_value">
-                                            </div>
-                                        </div>
-                                        @if (auth()->user()->isAdmin())
-                                            <div class="form-row mb-3">
-                                                <div class="form-group col-md-6">
-                                                    <label for="statusFilter">Status</label>
-                                                    <select class="form-control" id="statusFilter" name="status">
-                                                        <option value="">All</option>
-                                                        <option value="1">Published</option>
-                                                        <option value="0">Draft</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        @endif
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <button type="submit" class="btn btn-primary">Apply Filters</button>
-                                                <button type="reset" class="btn btn-secondary">Reset
-                                                    Filters</button>
-                                            </div>
-                                        </div>
-                                    </form>
+                                <div class="form-group col-md-6">
+                                    <label for="dateFilter">Date</label>
+                                    <select class="form-control" id="dateFilter" name="date_operator">
+                                        <option value="gt">After</option>
+                                        <option value="gte">On or after</option>
+                                        <option value="lt">Before</option>
+                                        <option value="lte">On or before</option>
+                                    </select>
+                                    <input type="date" class="form-control mt-2" id="dateFilterValue" name="date_value">
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Edit Modal --}}
-                @foreach ($announcements as $announcement)
-                    <div class="modal fade" id="editModal{{ $announcement->id }}" tabindex="-1" role="dialog"
-                        aria-labelledby="editModal{{ $announcement->id }}Label" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <form action="{{ route('dashboard.announcements.update', $announcement->id) }}"
-                                    method="POST">
-                                    @method('PUT')
-                                    @csrf
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="editModal{{ $announcement->id }}Label">Edit
-                                            Announcement</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+                            @if (auth()->user()->isAdmin())
+                                <div class="form-row mb-3">
+                                    <div class="form-group col-md-6">
+                                        <label for="statusFilter">Status</label>
+                                        <select class="form-control" id="statusFilter" name="status">
+                                            <option value="">All</option>
+                                            <option value="1">Published</option>
+                                            <option value="0">Draft</option>
+                                        </select>
                                     </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label for="title">Title</label>
-                                            <input value="{{ $announcement->title }}" type="text"
-                                                class="form-control" id="title" name="title">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="body">Body</label>
-                                            <textarea class="form-control" id="body" name="body">{{ $announcement->body }}</textarea>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                </form>
+                                </div>
+                            @endif
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <button type="submit" class="btn btn-primary">Apply Filters</button>
+                                    <button type="reset" class="btn btn-secondary">Reset
+                                        Filters</button>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                @endforeach
-
-                {{-- Add Modal --}}
-                <div class="modal fade" id="createModal" tabindex="-1" role="dialog"
-                    aria-labelledby="createModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <form action="{{ route('dashboard.announcements.store') }}" method="POST">
-                                @csrf
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="createModalLabel">Add Announcement</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <label for="title">Title</label>
-                                        <input value="{{ old('title') }}" type="text" class="form-control"
-                                            id="title" name="title">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="body">Body</label>
-                                        <textarea class="form-control" id="body" name="body">{{ old('body') }}</textarea>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Save changes</button>
-                                </div>
-                            </form>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    @if (auth()->user()->isAdmin())
+        {{-- Edit Modal --}}
+        @foreach ($announcements as $announcement)
+            <div class="modal fade" id="editModal{{ $announcement->id }}" tabindex="-1" role="dialog"
+                aria-labelledby="editModal{{ $announcement->id }}Label" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form action="{{ route('dashboard.announcements.update', $announcement) }}" method="POST">
+                            @method('PUT')
+                            @csrf
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editModal{{ $announcement->id }}Label">Edit
+                                    Announcement</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="title">Title</label>
+                                    <input value="{{ $announcement->title }}" type="text" class="form-control"
+                                        id="title" name="title">
+                                </div>
+                                <div class="form-group">
+                                    <label for="body">Body</label>
+                                    <textarea class="form-control" id="body" name="body">{{ $announcement->body }}</textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+
+        {{-- Add Modal --}}
+        <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form action="{{ route('dashboard.announcements.store') }}" method="POST">
+                        @csrf
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="createModalLabel">Add Announcement</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="title">Title</label>
+                                <input value="{{ old('title') }}" type="text" class="form-control" id="title"
+                                    name="title">
+                            </div>
+                            <div class="form-group">
+                                <label for="body">Body</label>
+                                <textarea class="form-control" id="body" name="body">{{ old('body') }}</textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endif
 @endsection

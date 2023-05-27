@@ -64,6 +64,16 @@ class User extends Authenticatable
         return $this->role->id === 1;
     }
 
+    public function chats()
+    {
+        return Chat::where('user1_id', $this->id)->orWhere('user2_id', $this->id)->orderBy('created_at', 'DESC')->get();
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
     public static function countAdmins()
     {
         return self::where('role_id', 2)->count();
@@ -72,5 +82,10 @@ class User extends Authenticatable
     public static function countUsers()
     {
         return self::where('role_id', 1)->count();
+    }
+
+    public function scopeAdmin($query)
+    {
+        return $query->where('role_id', 2);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
@@ -32,9 +33,9 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
         Route::patch('/update-password', [ProfileController::class, 'updatePassword'])->name('updatePassword');
     });
     Route::prefix('users')->name('users.')->group(function () {
+        Route::get('/{user}', [UserController::class, 'show'])->name('show');
         Route::middleware('admin')->group(function () {
             Route::get('/', [UserController::class, 'index'])->name('index');
-            Route::get('/{user}', [UserController::class, 'show'])->name('show');
             Route::post('/', [UserController::class, 'store'])->name('store');
             Route::put('/{user}', [UserController::class, 'update'])->name('update');
             Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
@@ -58,6 +59,14 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
             Route::post('/', [CourseController::class, 'store'])->name('store');
             Route::put('/{course}', [CourseController::class, 'update'])->name('update');
             Route::delete('/{course}', [CourseController::class, 'destroy'])->name('destroy');
+        });
+    });
+    Route::prefix('chats')->name('chats.')->group(function () {
+        Route::get('/', [ChatController::class, 'index'])->name('index');
+        Route::get('/{chat}', [ChatController::class, 'show'])->name('show');
+        Route::post('message/{chat}', [ChatController::class, 'message'])->name('message');
+        Route::middleware('user')->group(function () {
+            Route::post('/{admin_id}', [ChatController::class, 'store'])->name('store');
         });
     });
 });

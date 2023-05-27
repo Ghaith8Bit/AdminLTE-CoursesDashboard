@@ -10,6 +10,14 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <style>
+    #chat-card::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    #chat-card::-webkit-scrollbar-thumb {
+        background-color: #222;
+        border-radius: 20px;
+    }
 
     .form-check-label {
         border-radius: 50px;
